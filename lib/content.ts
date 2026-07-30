@@ -53,6 +53,8 @@ export const ui = {
     blurb:
       "A single-purpose tool: paste a TikTok link, get the file. No account, no queue, no upsell.",
     toolsHeading: "Downloaders",
+    guidesHeading: "Guides",
+    companyHeading: "Site",
     legalHeading: "Legal",
     rights: "All rights reserved.",
     disclaimer:
@@ -558,10 +560,387 @@ export const carouselCopy: PageCopy = {
   ],
 };
 
+/**
+ * /no-watermark — the watermark keyword, given its own page.
+ *
+ * The home page mentions the watermark; this one is about nothing else. That
+ * split is deliberate: "tiktok downloader no watermark" is a different query
+ * from "tiktok downloader", and a page that spends its whole body on how the
+ * clean version is obtained ranks for it better than a paragraph buried in a
+ * general page ever will.
+ */
+export const noWatermarkCopy: PageCopy = {
+  path: "/no-watermark",
+  navLabel: "No Watermark",
+
+  metaTitle: "TikTok Downloader No Watermark — Clean MP4, No Logo, No Crop",
+  metaDescription:
+    "Download TikTok videos with no watermark at all — not blurred, not cropped, not covered. We fetch the clean source file TikTok stores before the logo is applied.",
+  ogTitle: "TikTok Downloader — No Watermark, No Crop",
+  ogDescription:
+    "The clean source MP4, not a blurred or cropped fake. Paste a link and save it.",
+
+  h1: "Download TikTok videos with no watermark",
+  subtitle:
+    "There are two ways to get rid of a watermark: hide it, or never receive it. Blur boxes and auto-crops do the first and leave a scar. We do the second — we ask TikTok's servers for the copy that was never stamped in the first place.",
+
+  highlights: [
+    { icon: "shield", label: "Never stamped" },
+    { icon: "film", label: "No crop, no blur" },
+    { icon: "sparkle", label: "Source quality" },
+    { icon: "wallet", label: "Free, unlimited" },
+  ],
+
+  featuresEyebrow: "Removed, not covered up",
+  featuresTitle: "The difference you can see on the last frame",
+  featuresIntro:
+    "Most 'watermark remover' tools take the stamped file and edit it. Zoom in on the corner and you can always tell. This one never handles a stamped file at all.",
+  features: [
+    {
+      icon: "shield",
+      title: "Fetched clean, not cleaned up",
+      body: "TikTok stores an unstamped rendition alongside the one the app shows. We request that rendition by name. There is nothing to erase because the logo was never there.",
+    },
+    {
+      icon: "film",
+      title: "The frame keeps its edges",
+      body: "Crop-based removers shave 5-10% off every side to push the logo out of frame, quietly reframing the shot and breaking the aspect ratio. Your file comes back at the exact dimensions it was uploaded at.",
+    },
+    {
+      icon: "sparkle",
+      title: "No blur patch, no smear",
+      body: "Inpainting tools leave a soft rectangle that drifts across the video as the logo bounces. There is no patch in your download, because there was nothing to patch over.",
+    },
+    {
+      icon: "lock",
+      title: "The username goes too",
+      body: "The stamped build carries the @handle as well as the animated logo, and both live in the same overlay. Taking the clean rendition removes the pair of them in one go.",
+    },
+  ],
+
+  stepsEyebrow: "How to get the clean file",
+  stepsTitle: "Three steps, nothing to configure",
+  steps: [
+    {
+      title: "Copy the video link",
+      body: "Share, then Copy link, on any public post. Both the long tiktok.com address and the short vm/vt one carry the same post ID, so either works.",
+    },
+    {
+      title: "Paste it into the box above",
+      body: "No quality dropdown, no watermark toggle to remember. The clean rendition is the only one this site ever offers.",
+    },
+    {
+      title: "Save the MP4",
+      body: "Pick HD or standard from the result card. Both are unstamped — the choice is about file size, never about the logo.",
+    },
+  ],
+
+  formatsTitle: "What you actually receive",
+  formatsIntro:
+    "Every file below comes from the unstamped rendition. The watermarked build TikTok also stores is never offered here.",
+  formats: [
+    {
+      format: "MP4",
+      label: "HD, no watermark",
+      detail: "Highest stored resolution, full frame, no logo and no @handle",
+    },
+    {
+      format: "MP4",
+      label: "Standard, no watermark",
+      detail: "Same clean frame at a smaller size, for saving on mobile data",
+    },
+    {
+      format: "MP3",
+      label: "Audio, no voice tag",
+      detail: "The sound alone, with no spoken advert spliced onto either end",
+    },
+  ],
+
+  faqTitle: "Watermark questions",
+  faqIntro: "The ones worth answering honestly.",
+  faq: [
+    {
+      question: "How do I remove the watermark from a TikTok video?",
+      answer:
+        "You do not have to remove anything. Paste the post link at the top of this page and the file that comes back has never had a watermark applied — TikTok keeps an unstamped rendition of every public post and that is the one we request.",
+    },
+    {
+      question: "Is the video cropped to hide the logo?",
+      answer:
+        "No. Cropping is what tools do when they only have the stamped file to work with — they cut the edges until the logo falls outside the frame, which changes the composition and the aspect ratio. Your download is the full original frame.",
+    },
+    {
+      question: "Will there be a blurred patch where the logo was?",
+      answer:
+        "No. A blur patch is the giveaway of an inpainting tool, and it is especially obvious on a TikTok because the logo bounces between corners, dragging the soft rectangle around with it. Nothing on this site paints over anything.",
+    },
+    {
+      question: "Does removing the watermark lower the quality?",
+      answer:
+        "Not here, because nothing is re-encoded. Tools that crop or blur have to decode the video, edit the pixels, and encode it again, and that second encode is where detail is lost. We stream the untouched file through, so what you save is bit-for-bit what TikTok serves.",
+    },
+    {
+      question: "Does the creator's username stay on the video?",
+      answer:
+        "No. The @handle and the animated logo are drawn into the same overlay, so the clean rendition has neither. If you republish the video, credit the creator yourself — the absence of a stamp is not permission to pass work off as your own.",
+    },
+    {
+      question: "Can I download without a watermark on my phone?",
+      answer:
+        "Yes, and there is nothing to install. The flow is identical in Safari on iOS and Chrome on Android, and it works inside the in-app browsers in TikTok, Instagram, and Telegram.",
+    },
+  ],
+};
+
+/** /hd — the resolution keyword. Everything on this page is about quality. */
+export const hdCopy: PageCopy = {
+  path: "/hd",
+  navLabel: "HD",
+
+  metaTitle: "TikTok HD Downloader — Save TikTok Videos in Full Quality",
+  metaDescription:
+    "Download TikTok videos in HD at the highest resolution the post was stored in — 1080p when the creator uploaded it. No upscaling, no re-encoding, no fake 4K.",
+  ogTitle: "TikTok HD Downloader",
+  ogDescription:
+    "The original upload, not the compressed preview. HD when the post has it.",
+
+  h1: "Download TikTok videos in HD",
+  subtitle:
+    "The clip you watch in the app is a compressed preview built for a scrolling feed. There is a larger original sitting behind it. Paste a link and we hand you that file instead — often ten times the size, and it shows.",
+
+  highlights: [
+    { icon: "sparkle", label: "Original upload" },
+    { icon: "film", label: "Up to 1080p" },
+    { icon: "bolt", label: "No re-encode" },
+    { icon: "shield", label: "No watermark" },
+  ],
+
+  featuresEyebrow: "Where the quality goes",
+  featuresTitle: "Two renditions, and the app shows you the small one",
+  featuresIntro:
+    "TikTok stores each post more than once. Understanding which copy you are getting is the whole difference between an HD download and a blurry one.",
+  features: [
+    {
+      icon: "sparkle",
+      title: "The original, not the preview",
+      body: "The feed version is squeezed hard so it starts instantly over mobile data. We request the high-definition rendition instead — on a one-minute clip that is routinely 100 MB against 9 MB.",
+    },
+    {
+      icon: "bolt",
+      title: "Nothing is re-encoded",
+      body: "We never open the video. It is streamed from TikTok's CDN straight to your device, so there is no second compression pass to soften edges or band the gradients.",
+    },
+    {
+      icon: "clock",
+      title: "The size is on the button",
+      body: "HD files are large enough that downloading one by accident on a metered connection stings. The result card prints the byte size next to each option before you commit.",
+    },
+    {
+      icon: "check",
+      title: "Honest about the ceiling",
+      body: "If a post was filmed and uploaded at 720p, that is what exists. We hand you the true source rather than upscaling it and calling the result 4K.",
+    },
+  ],
+
+  stepsEyebrow: "How to get the HD file",
+  stepsTitle: "Link in, original out",
+  steps: [
+    {
+      title: "Copy the link to the post",
+      body: "Share, then Copy link, inside TikTok. Grabbing the address from your browser's bar works identically.",
+    },
+    {
+      title: "Paste it above and fetch",
+      body: "We resolve the post and read every rendition attached to it, high definition included.",
+    },
+    {
+      title: "Choose HD video",
+      body: "The result card lists HD first with its file size. Tap it and the original starts downloading — larger files simply take longer to arrive.",
+    },
+  ],
+
+  formatsTitle: "What comes back",
+  formatsIntro:
+    "Both video options are watermark-free. They differ in resolution and size, nothing else.",
+  formats: [
+    {
+      format: "MP4",
+      label: "HD video",
+      detail: "The original upload, up to 1080p, typically 10x the standard file size",
+    },
+    {
+      format: "MP4",
+      label: "Standard video",
+      detail: "The compressed feed rendition — smaller, faster, still unstamped",
+    },
+    {
+      format: "MP3",
+      label: "Audio track",
+      detail: "The sound on its own, at whatever bitrate the post carries",
+    },
+  ],
+
+  faqTitle: "Quality questions",
+  faqIntro: "What HD does and does not mean on TikTok.",
+  faq: [
+    {
+      question: "How do I download a TikTok video in HD?",
+      answer:
+        "Paste the post link at the top of this page. When the result card appears, use the HD video button rather than the standard one — it points at the high-definition rendition TikTok stores for the post.",
+    },
+    {
+      question: "Why is there no HD button on some videos?",
+      answer:
+        "Because that post has no high-definition rendition. Older uploads, videos filmed in-app on a low-end phone, and reposts of already-compressed clips often only exist in one quality. When that happens we show what there is instead of relabelling the standard file as HD.",
+    },
+    {
+      question: "Can I download TikTok videos in 4K?",
+      answer:
+        "Only if a 4K master existed, which it effectively never does — TikTok caps what it stores well below that. Any tool advertising 4K TikTok downloads is upscaling a 1080p file, which invents pixels without adding detail and just makes the download bigger.",
+    },
+    {
+      question: "Why is the HD file so much larger?",
+      answer:
+        "Because it holds more picture information. The feed rendition is built to start playing in under a second on a weak connection; the HD one is built to look right on a large screen. A ten-fold difference between the two is normal, not a bug.",
+    },
+    {
+      question: "Does the HD version still have no watermark?",
+      answer:
+        "Correct. Both video options here come from unstamped renditions. Choosing HD is a decision about resolution and file size only — the frame is clean either way.",
+    },
+    {
+      question: "Will the HD file play on my phone?",
+      answer:
+        "Yes. It is a standard H.264 MP4, which every phone, browser, editor, and TV stick made in the past decade plays without a codec pack.",
+    },
+  ],
+};
+
+/** /slideshow — the slideshow keyword for photo posts. */
+export const slideshowCopy: PageCopy = {
+  path: "/slideshow",
+  navLabel: "Slideshow",
+
+  metaTitle: "TikTok Slideshow Downloader — Save the Images and the Sound",
+  metaDescription:
+    "Download a TikTok slideshow: every image at full resolution plus the track playing behind it. Save one picture, take the whole set as a ZIP, or grab the audio alone.",
+  ogTitle: "TikTok Slideshow Downloader",
+  ogDescription:
+    "Every image from a TikTok slideshow, plus the sound behind it.",
+
+  h1: "Download a TikTok slideshow, pictures and sound",
+  subtitle:
+    "A slideshow is not a video, and that is why screen recording it goes so badly. It is a stack of still images with a track playing over them. Paste the link and we give you both halves separately, each at full quality.",
+
+  highlights: [
+    { icon: "images", label: "Stills, not frames" },
+    { icon: "music", label: "The sound too" },
+    { icon: "check", label: "Original order" },
+    { icon: "wallet", label: "Free, unlimited" },
+  ],
+
+  featuresEyebrow: "Why recording it fails",
+  featuresTitle: "A slideshow is images plus audio, never a video file",
+  featuresIntro:
+    "Screen recording flattens both halves into one compressed clip and picks up your notifications on the way. Downloading keeps them apart and keeps them sharp.",
+  features: [
+    {
+      icon: "images",
+      title: "Real image files",
+      body: "Each slide comes back as the JPEG TikTok hosts, at the size it was uploaded. A screen recording would hand you a video frame at your phone's resolution instead.",
+    },
+    {
+      icon: "music",
+      title: "The track, on its own",
+      body: "The audio is a separate MP3 button. You can save the sound without the pictures, or the pictures without the sound, rather than being handed them fused together.",
+    },
+    {
+      icon: "check",
+      title: "The sequence survives",
+      body: "Slides are numbered in the order the creator arranged them, so a set stays readable after it lands in your files — which matters most on the text-heavy slideshows where the order is the content.",
+    },
+    {
+      icon: "layers",
+      title: "One tap for a long set",
+      body: "Thirty slides is thirty saves and a browser that starts blocking them halfway. Download all as ZIP bundles the set into a single file instead.",
+    },
+  ],
+
+  stepsEyebrow: "How to save one",
+  stepsTitle: "From link to files",
+  steps: [
+    {
+      title: "Copy the slideshow link",
+      body: "Open the post, tap Share, then Copy link. TikTok labels these photo posts; slideshow and carousel are the same thing by another name.",
+    },
+    {
+      title: "Paste it above",
+      body: "We resolve the post and lay out every slide in a grid, so you can check nothing is missing before saving.",
+    },
+    {
+      title: "Take the images, the sound, or both",
+      body: "Save a single slide, take the whole set as a ZIP, or use the audio button on its own. Nothing forces you to download the part you did not want.",
+    },
+  ],
+
+  formatsTitle: "What a slideshow resolves to",
+  formatsIntro: "Three separate things, offered separately.",
+  formats: [
+    {
+      format: "JPG",
+      label: "Each slide",
+      detail: "Full stored resolution, one save button per image",
+    },
+    {
+      format: "ZIP",
+      label: "The whole set",
+      detail: "Every slide numbered in sequence, wrapped in one download",
+    },
+    {
+      format: "MP3",
+      label: "The backing track",
+      detail: "The post's audio, kept outside the archive so you can take it alone",
+    },
+  ],
+
+  faqTitle: "Slideshow questions",
+  faqIntro: "Specific to photo posts.",
+  faq: [
+    {
+      question: "How do I download a TikTok slideshow?",
+      answer:
+        "Paste the post link at the top of this page. Every slide appears in a grid with its own save button, with Download all as ZIP above the grid and the audio button beside it.",
+    },
+    {
+      question: "Can I download the slideshow as a video?",
+      answer:
+        "No, and no honest tool can hand you one straight from TikTok, because no video file exists for these posts — the app assembles the slides on your screen as it plays. You get the images and the track, which is everything you need to rebuild it in any editor.",
+    },
+    {
+      question: "Why is there no HD video button on this post?",
+      answer:
+        "Because it is a slideshow. The upstream data labels the post's audio stream in the same field a video would occupy, so a tool that trusts that field blindly gives you an 'HD video' button that quietly saves a sound file. We check for images first and hide the video buttons when there are any.",
+    },
+    {
+      question: "Do the images keep their order?",
+      answer:
+        "Yes. Files are numbered photo-01, photo-02, and so on, matching the sequence in the post. Sorting by filename reproduces the slideshow exactly.",
+    },
+    {
+      question: "Can I get just the sound from a slideshow?",
+      answer:
+        "Yes. The audio button sits above the image grid, so you never have to scroll past the slides or download a single picture to reach the track.",
+    },
+  ],
+};
+
 /** Every landing page, in the order they appear in navigation and the sitemap. */
 export const allPages: readonly PageCopy[] = [
   homeCopy,
+  noWatermarkCopy,
+  hdCopy,
   mp3Copy,
   photosCopy,
+  slideshowCopy,
   carouselCopy,
 ] as const;

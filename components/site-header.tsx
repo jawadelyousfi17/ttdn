@@ -5,13 +5,17 @@ import { allPages, ui } from "@/lib/content";
 import { site } from "@/lib/site";
 
 /**
- * Sticky top bar. It carries the wordmark and the four tool links, which does
- * double duty: people can move between the downloaders, and every page ends up
- * one hop from every other for crawlers.
+ * Sticky top bar. It carries the wordmark and every tool link, which does
+ * double duty: people can move between the downloaders, and each one ends up
+ * one hop from every other for crawlers. Guides, policies, and the About and
+ * Contact pages live in the footer instead — putting them up here would push
+ * the downloaders off the bar on a phone, and they are not what anyone came
+ * for.
  *
- * The nav is a plain scrollable row rather than a hamburger. With only four
- * short links, a mobile menu would add a client component, a state hook, and a
- * focus trap to hide four words.
+ * The nav is a plain scrollable row rather than a hamburger. The labels are
+ * short enough to sit side by side on a laptop and to scroll comfortably on a
+ * phone, which is a better trade than a client component, a state hook, and a
+ * focus trap to hide seven words.
  */
 export function SiteHeader() {
   return (

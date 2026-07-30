@@ -1,7 +1,9 @@
 # TikTok Downloader
 
-Paste a TikTok link, get the file. Four SEO-targeted landing pages over one
-lookup pipeline: video, audio, photos, and carousels.
+Paste a TikTok link, get the file. Seven SEO-targeted landing pages over one
+lookup pipeline — video, no-watermark, HD, audio, photos, slideshows, carousels
+— plus a small set of how-to guides and the pages that make the site look like
+it belongs to someone.
 
 Built with Next.js 16 (App Router, Turbopack), React 19, and Tailwind CSS v4.
 English only — no i18n layer.
@@ -18,23 +20,48 @@ npm run dev
 | --- | --- | --- |
 | `RAPIDAPI_KEY` | yes | RapidAPI key for the lookup provider. Without it every lookup fails with a configuration error. |
 | `RAPIDAPI_HOST` | no | Defaults to `tiktok-scraper7.p.rapidapi.com`. |
-| `NEXT_PUBLIC_SITE_URL` | production | Absolute origin, no trailing slash. Drives canonical URLs, `sitemap.xml`, and `robots.txt`. |
+| `NEXT_PUBLIC_SITE_URL` | previews only | Absolute origin, no trailing slash. Overrides the canonical origin (`https://www.idownit.com`, in `lib/site.ts`) that drives canonical URLs, `sitemap.xml`, and `robots.txt`. Set it on staging so those builds do not advertise the live domain. |
 
 Set a **hard quota cap in the RapidAPI dashboard**. The in-app rate limits slow
 abuse down; the quota cap is the only thing that actually bounds the bill.
 
 ## Routes
 
+**Tool pages** — one pipeline, seven keyword targets, all driven by `lib/content.ts`:
+
 | Path | Targets |
 | --- | --- |
 | `/` | TikTok video downloader (HD + standard MP4) |
+| `/no-watermark` | The watermark query — fetched clean, never cropped or blurred |
+| `/hd` | Resolution and the original upload |
 | `/mp3` | Audio extraction |
 | `/photos` | Individual images from photo posts |
+| `/slideshow` | Photo posts as slideshows — images plus the track |
 | `/carousel` | Whole slideshows bundled as a ZIP |
 
 Each page owns its copy — headings, features, steps, format table, and FAQ all
-differ per route, so the four pages do not compete for the same keywords with
-duplicate body text. Everything lives in `lib/content.ts`.
+differ per route, so the pages do not compete for the same keywords with
+duplicate body text. Adding one means adding a `PageCopy` to `allPages` and a
+route that renders `<LandingPage>`; the header, footer, and sitemap pick it up
+on their own.
+
+`/photos`, `/slideshow`, and `/carousel` all serve photo posts from different
+angles (single images, images plus audio, bulk ZIP). If Search Console ever
+shows them swapping for the same query, consolidate rather than adding more.
+
+**Content pages** — no downloader on them, they funnel into one:
+
+| Path | Purpose |
+| --- | --- |
+| `/guides` | Index of the how-to articles |
+| `/guides/[slug]` | Device walkthroughs, prerendered from `lib/guides.ts` |
+| `/about` | What the tool does, how, and what it deliberately does not do |
+| `/contact` | One address, and what to put in the message |
+| `/privacy`, `/terms`, `/dmca` | Policies, from `lib/legal.ts` |
+
+Guides carry `Article` + `BreadcrumbList` + `FAQPage` JSON-LD; the tool pages
+carry `FAQPage`. All of it is generated from the same constants the page
+renders, so the markup can never claim something the visible page does not say.
 
 Submitting a link navigates to `?url=…` on the current path, so results are
 server-rendered and shareable. Those addresses are `noindex, follow` and are

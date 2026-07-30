@@ -16,7 +16,9 @@ export type IconName =
   | "layers"
   | "clock"
   | "check"
-  | "film";
+  | "film"
+  | "desktop"
+  | "mail";
 
 export interface Highlight {
   icon: IconName;
@@ -110,4 +112,49 @@ export interface LegalPageCopy {
   lastUpdated: string;
 
   sections: LegalSection[];
+}
+
+/**
+ * One block of a how-to guide. Same shape as a legal section plus an optional
+ * numbered list, because the whole point of a guide is that some of its blocks
+ * are a sequence you follow in order and the rest are prose around them.
+ */
+export interface GuideSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  steps?: StepItem[];
+}
+
+/**
+ * A guide article under /guides. These carry no downloader form: they exist to
+ * answer a device-specific question ("where did the file go on my iPhone?")
+ * that the tool pages cannot answer without burying their own H1 in caveats,
+ * and they hand the reader back to the right tool page at the end.
+ */
+export interface GuidePageCopy {
+  /** Final URL segment. The full path is derived — see lib/guides#guidePath. */
+  slug: string;
+  navLabel: string;
+  icon: IconName;
+
+  metaTitle: string;
+  metaDescription: string;
+  ogTitle: string;
+  ogDescription: string;
+
+  /** H1. Distinct from metaTitle, which carries the brand suffix. */
+  title: string;
+  /** Standfirst under the H1. */
+  intro: string;
+  /** One line on the /guides index card. Shorter than the intro. */
+  summary: string;
+  lastUpdated: string;
+
+  sections: GuideSection[];
+  faq: FaqItem[];
+
+  /** Tool page this guide sends the reader to, and the button's label. */
+  ctaPath: string;
+  ctaLabel: string;
 }

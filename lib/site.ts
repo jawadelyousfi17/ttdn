@@ -13,15 +13,24 @@ export const site = {
    * site name as live text rather than shipping the name as pixels.
    */
   logo: "/logo.png",
+  /**
+   * Canonical origin of the production deployment. Hard-coded rather than
+   * env-only on purpose: if `NEXT_PUBLIC_SITE_URL` is ever missing on the
+   * host, a localhost fallback would quietly publish a sitemap and a set of
+   * canonicals pointing at 127.0.0.1 — the kind of breakage that costs weeks
+   * of indexing before anyone notices. The env var still wins, so preview
+   * deployments can point the metadata at their own origin.
+   */
+  origin: "https://www.idownit.com",
 } as const;
 
 /**
  * Absolute origin of the deployment, with any trailing slash removed.
- * `NEXT_PUBLIC_SITE_URL` should be set in production — the localhost fallback
- * only keeps `next build` from emitting a broken sitemap during development.
+ * `NEXT_PUBLIC_SITE_URL` overrides the canonical origin — set it on previews
+ * and staging so those builds do not advertise the production address.
  */
 export function siteOrigin(): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? site.origin;
   return raw.replace(/\/+$/, "");
 }
 

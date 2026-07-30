@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
+import { guidePath } from "@/lib/guides";
 import { siteOrigin } from "@/lib/site";
-import type { LegalPageCopy, PageCopy } from "@/types/content";
+import type { GuidePageCopy, LegalPageCopy, PageCopy } from "@/types/content";
 
 /**
  * Build the Metadata object for a landing page.
@@ -70,6 +71,65 @@ export function buildLegalMetadata(copy: LegalPageCopy): Metadata {
       description: copy.metaDescription,
       url: `${origin}${copy.path}`,
       type: "article",
+      locale: "en_US",
+    },
+    robots: { index: true, follow: true },
+  };
+}
+
+/**
+ * Metadata for a guide article.
+ *
+ * The title is absolute for the same reason the landing pages' are: these
+ * already read as full search-result headlines, and letting the layout append
+ * "· TikTok Downloader" would push every one of them past the width Google
+ * renders and truncate the part that carries the keyword.
+ */
+export function buildGuideMetadata(copy: GuidePageCopy): Metadata {
+  const origin = siteOrigin();
+  const path = guidePath(copy.slug);
+
+  return {
+    title: { absolute: copy.metaTitle },
+    description: copy.metaDescription,
+    alternates: { canonical: path },
+    openGraph: {
+      title: copy.ogTitle,
+      description: copy.ogDescription,
+      url: `${origin}${path}`,
+      type: "article",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: copy.ogTitle,
+      description: copy.ogDescription,
+    },
+    robots: { index: true, follow: true },
+  };
+}
+
+/**
+ * Metadata for a section index — currently only /guides. Absolute title again:
+ * the index's own metaTitle already spells out the platforms it covers, which
+ * is what people search, and the brand suffix would only crowd it out.
+ */
+export function buildSectionMetadata(copy: {
+  path: string;
+  metaTitle: string;
+  metaDescription: string;
+}): Metadata {
+  const origin = siteOrigin();
+
+  return {
+    title: { absolute: copy.metaTitle },
+    description: copy.metaDescription,
+    alternates: { canonical: copy.path },
+    openGraph: {
+      title: copy.metaTitle,
+      description: copy.metaDescription,
+      url: `${origin}${copy.path}`,
+      type: "website",
       locale: "en_US",
     },
     robots: { index: true, follow: true },

@@ -5,8 +5,20 @@ import { contactEmail } from "@/lib/site";
 import { legalPages } from "@/lib/legal";
 import type { LegalPageCopy } from "@/types/content";
 
-interface LegalDocumentProps {
+/** The minimum a cross-link needs: somewhere to point and something to say. */
+interface DocumentLink {
+  path: string;
+  navLabel: string;
+}
+
+interface ProseDocumentProps {
   copy: LegalPageCopy;
+  /**
+   * Related pages listed under the document. Defaults to the other policies,
+   * which is what the three legal pages want; About and Contact pass their own
+   * set so they cross-link to each other rather than only to the policies.
+   */
+  siblings?: readonly DocumentLink[];
 }
 
 /**
@@ -37,13 +49,14 @@ function withEmailLinks(text: string, email: string): React.ReactNode {
 }
 
 /**
- * Shared renderer for the three policies. One component means the documents
- * cannot drift apart typographically, and the structured section data means
- * none of them ships raw HTML.
+ * Shared renderer for every prose page on the site — the three policies plus
+ * About and Contact. One component means the documents cannot drift apart
+ * typographically, and the structured section data means none of them ships
+ * raw HTML.
  */
-export function LegalDocument({ copy }: LegalDocumentProps) {
+export function ProseDocument({ copy, siblings }: ProseDocumentProps) {
   const email = contactEmail();
-  const siblings = legalPages.filter((page) => page.path !== copy.path);
+  const links = (siblings ?? legalPages).filter((page) => page.path !== copy.path);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
@@ -95,11 +108,11 @@ export function LegalDocument({ copy }: LegalDocumentProps) {
         ))}
       </div>
 
-      {/* Cross-links between the policies. Someone reading one of these is
+      {/* Cross-links between the documents. Someone reading one of these is
           disproportionately likely to want another, and it saves a trip back
           to the footer. */}
       <nav className="mt-14 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-6 text-sm">
-        {siblings.map((page) => (
+        {links.map((page) => (
           <Link
             key={page.path}
             href={page.path}

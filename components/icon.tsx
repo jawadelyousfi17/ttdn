@@ -5,6 +5,8 @@ import {
   Images,
   Layers,
   Lock,
+  Mail,
+  Monitor,
   Music4,
   ShieldCheck,
   Smartphone,
@@ -35,6 +37,8 @@ const ICONS: Record<IconName, LucideIcon> = {
   clock: Clock3,
   check: BadgeCheck,
   film: Film,
+  desktop: Monitor,
+  mail: Mail,
 };
 
 interface IconProps {
