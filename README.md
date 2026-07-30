@@ -1,4 +1,4 @@
-# Klipp — TikTok Downloader
+# TikTok Downloader
 
 Paste a TikTok link, get the file. Four SEO-targeted landing pages over one
 lookup pipeline: video, audio, photos, and carousels.
@@ -99,4 +99,29 @@ types/         content and upstream response shapes
 
 Design tokens are defined once in `app/globals.css` and consumed only through
 Tailwind utilities, so the palette can be swapped from that one file.
+
+## Branding assets
+
+The source mark is `public/logo.png`, referenced through `lib/site.ts` and
+rendered by the header and footer via `next/image` (the 703 KB source is served
+as a ~700 byte WebP at display size).
+
+`app/favicon.ico`, `app/icon.png`, and `app/apple-icon.png` are generated from
+that same file and picked up automatically by Next's app-icon conventions. To
+regenerate them after changing the logo:
+
+```bash
+node -e "
+const sharp = require('sharp');
+const png = (s) => sharp('public/logo.png').resize(s, s).ensureAlpha()
+  .png({ compressionLevel: 9, palette: true, quality: 90 });
+png(512).toFile('app/icon.png');
+png(180).toFile('app/apple-icon.png');
+"
+```
+
+Two constraints worth knowing: the PNG payloads inside `favicon.ico` **must be
+RGBA** or Turbopack refuses to decode the file at build time, and the icon
+sizes are palette-quantized because the truecolor 512px encode is roughly six
+times larger for no visible gain on flat artwork.
 # ttdn

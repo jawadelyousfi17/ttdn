@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 
 import { LandingPage, firstString } from "@/components/landing-page";
-import { homeCopy } from "@/lib/content";
+import { mp3Copy } from "@/lib/content";
 import { buildPageMetadata, withResultRobots } from "@/lib/metadata";
 
 export async function generateMetadata({
   searchParams,
-}: PageProps<"/">): Promise<Metadata> {
-  const meta = buildPageMetadata(homeCopy);
+}: PageProps<"/mp3">): Promise<Metadata> {
+  const meta = buildPageMetadata(mp3Copy);
   const sp = await searchParams;
-  // A ?url= address is unique per video and has no business in an index.
   return firstString(sp.url) ? withResultRobots(meta) : meta;
 }
 
-export default async function HomePage({ searchParams }: PageProps<"/">) {
+export default async function Mp3Page({ searchParams }: PageProps<"/mp3">) {
   const sp = await searchParams;
-  return <LandingPage copy={homeCopy} rawUrl={firstString(sp.url)} />;
+  return <LandingPage copy={mp3Copy} rawUrl={firstString(sp.url)} />;
 }

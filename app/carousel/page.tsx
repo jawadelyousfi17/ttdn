@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 
 import { LandingPage, firstString } from "@/components/landing-page";
-import { homeCopy } from "@/lib/content";
+import { carouselCopy } from "@/lib/content";
 import { buildPageMetadata, withResultRobots } from "@/lib/metadata";
 
 export async function generateMetadata({
   searchParams,
-}: PageProps<"/">): Promise<Metadata> {
-  const meta = buildPageMetadata(homeCopy);
+}: PageProps<"/carousel">): Promise<Metadata> {
+  const meta = buildPageMetadata(carouselCopy);
   const sp = await searchParams;
-  // A ?url= address is unique per video and has no business in an index.
   return firstString(sp.url) ? withResultRobots(meta) : meta;
 }
 
-export default async function HomePage({ searchParams }: PageProps<"/">) {
+export default async function CarouselPage({ searchParams }: PageProps<"/carousel">) {
   const sp = await searchParams;
-  return <LandingPage copy={homeCopy} rawUrl={firstString(sp.url)} />;
+  return <LandingPage copy={carouselCopy} rawUrl={firstString(sp.url)} />;
 }

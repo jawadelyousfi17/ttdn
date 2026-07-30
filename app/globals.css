@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens live here and nowhere else. Components reference them only
+ * through Tailwind utilities (bg-surface, text-muted, border-line, shadow-lift)
+ * so the whole site can be re-skinned from this file without touching JSX.
+ *
+ * Direction: a dark "console" look. Near-black canvas, slightly lifted panels,
+ * hairline borders doing the structural work, and a single electric cyan
+ * carrying every primary action. Magenta appears only inside decorative
+ * gradients — never as a second call to action, which would split attention
+ * away from the one button that matters.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Canvas and panels. Three steps of elevation is enough: page, panel,
+     raised. Beyond that the hairline borders stop reading as structure. */
+  --canvas: 7 9 14;
+  --surface: 14 17 25;
+  --raised: 20 24 34;
+
+  --foreground: 236 240 248;
+  --muted: 143 153 174;
+  /* Dimmer than --muted, for eyebrows and metadata that should recede. */
+  --faint: 99 108 130;
+
+  /* Hairlines. --line is the default; --line-strong marks the edge of an
+     interactive surface that should feel grabbable. */
+  --line: 31 37 51;
+  --line-strong: 48 57 76;
+
+  /* Brand. Cyan reads as "go" against a dark canvas without the muddiness a
+     mid blue picks up at these luminance levels. */
+  --primary: 34 211 238;
+  --primary-foreground: 4 16 20;
+  /* Desaturated cyan for icon tiles and hover fills, pre-mixed so components
+     never hand-roll an rgb(... / ...) string. */
+  --primary-wash: 16 44 53;
+
+  --accent: 244 63 118;
+
+  --danger: 248 113 113;
+  --danger-wash: 43 18 22;
+
+  /* Shape. Tighter than the usual pill-heavy landing page — the flatter radius
+     is a large part of what makes this read as tooling rather than marketing. */
+  --radius: 0.625rem;
+
+  /* Elevation. On a dark canvas a drop shadow alone is nearly invisible, so
+     the inset top highlight is what actually lifts a panel off the page. */
+  --shadow-lift:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.05),
+    0 1px 2px rgb(0 0 0 / 0.4),
+    0 16px 40px -24px rgb(0 0 0 / 0.85);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: rgb(var(--canvas));
+  --color-surface: rgb(var(--surface));
+  --color-raised: rgb(var(--raised));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-faint: rgb(var(--faint));
+  --color-line: rgb(var(--line));
+  --color-line-strong: rgb(var(--line-strong));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-primary-wash: rgb(var(--primary-wash));
+  --color-accent: rgb(var(--accent));
+  --color-danger: rgb(var(--danger));
+  --color-danger-wash: rgb(var(--danger-wash));
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-grotesk);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.2rem);
+  --radius-sm: calc(var(--radius) - 0.35rem);
+
+  --shadow-lift: var(--shadow-lift);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* The site commits to one dark palette, so tell the browser to match its
+     native controls and scrollbars instead of flashing a light scrollbar
+     against a black page. */
+  color-scheme: dark;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--canvas));
+  color: rgb(var(--foreground));
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Space Grotesk sets a touch wide at display sizes, which reads as loose next
+   to the dense hairline layout. */
+.font-display {
+  letter-spacing: -0.022em;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}
+
+/*
+ * Faint dot grid behind the hero. Painted as a background-image rather than an
+ * extra DOM node so it costs nothing in markup and cannot intercept pointer
+ * events.
+ */
+.bg-dots {
+  background-image: radial-gradient(rgb(var(--line-strong)) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Honour a reduced-motion preference — switches off the pulse on skeleton
+   placeholders and the spin on the pending indicator. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-spin {
+    animation: none;
+  }
 }
